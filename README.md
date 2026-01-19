@@ -1,6 +1,5 @@
-# Aplikasi NGASAL - Absensi Digital
+# Aplikasi NGASAL
 
-Aplikasi web sederhana untuk absensi dengan 2 endpoint berbeda (SS - Kantor dan WH - Rumah).
 
 ## Fitur
 
@@ -43,31 +42,8 @@ python server.py
 └── .gitignore
 ```
 
-## Konfigurasi
-
-Edit `server.py` untuk mengubah data default:
-
-### DEFAULT_DATA_SS (Kantor - Snapshot)
-- LATITUDE: -6.187057576827758
-- LONGITUDE: 106.82053837546468
-- ADDRESS: PGMTA, Jl. K.H. Wahid Hasyim...
-
-### DEFAULT_DATA_WH (Rumah - Work From Home)
-- Ubah LATITUDE, LONGITUDE, ADDRESS sesuai lokasi rumah Anda
-
-## API Endpoints
-
-### POST /api/absen/ss
-Kirim absen SS (Snapshot - Kantor)
-
-### POST /api/absen/wh  
-Kirim absen WH (Work From Home - Rumah)
-
-## Note
-- VISITORID di-generate random otomatis
-- Setiap klik button ada konfirmasi terlebih dahulu
-- Response dari Google Apps Script ditampilkan full
 
 ## License
 MIT
+
 
