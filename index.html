@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TESTING</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .buttons-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        button {
+            padding: 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-ss {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .btn-ss:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-ss:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-wh {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .btn-wh:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
+        }
+
+        .btn-wh:active {
+            transform: translateY(-1px);
+        }
+
+        .status {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            button {
+                padding: 15px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Aplikasi NGACO</h1>
+            <p>TIDAK UNTUK DITIRU</p>
+        </div>
+
+        <div class="buttons-section">
+            <button class="btn-ss" onclick="absenSS()">
+            SS
+            </button>
+            <!-- <button class="btn-wh" onclick="absenWH()">
+                ABSEN WH
+            </button> -->
+        </div>
+
+        <div class="status" id="status"></div>
+    </div>
+
+    <script>
+        const API_URL_SS = 'http://localhost:5000/api/absen/ss';  // Kantor
+        const API_URL_WH = 'http://localhost:5000/api/absen/wh';  // Rumah
+
+        function showStatus(message, isSuccess = true) {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = isSuccess ? 'status success' : 'status error';
+            
+            setTimeout(() => {
+                statusEl.className = 'status';
+            }, 8000);  // Ditampilkan selama 8 detik
+        }
+
+        async function sendAbsen(apiUrl, type) {
+            try {
+                showStatus(`⏳ Sedang mengirim ${type}...`, true);
+
+                console.log('📤 Sending to:', apiUrl);
+                console.log('Type:', type);
+
+                // Send to Python backend
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ type: type })
+                });
+                
+                console.log('✅ Fetch executed');
+                console.log('Response Status:', response.status);
+
+                const data = await response.json();
+                
+                console.log('📨 Full Response:', data);
+                
+                if (data.success || data.status_code === 200) {
+                    showStatus(`✅ ${type} berhasil dikirim!\n\n${data.message}`, true);
+                } else {
+                    showStatus(`✅ ${type} berhasil dikirim!\n\n${data.message}`, true);
+                }
+
+            } catch (error) {
+                console.error('❌ Error:', error);
+                showStatus(`❌ Error: ${error.message}`, false);
+            }
+        }
+
+        function absenSS() {
+           sendAbsen(API_URL_SS, 'SS');
+            // if (confirm('Yakin ingin ABSEN SS (Kantor)?')) {
+            //     sendAbsen(API_URL_SS, 'ABSEN SS (Kantor)');
+            // }
+        }
+
+        function absenWH() {
+            sendAbsen(API_URL_WH, 'WH');
+            // if (confirm('Yakin ingin ABSEN WH (Rumah)?')) {
+            //     sendAbsen(API_URL_WH, 'ABSEN WH (Rumah)');
+            // }
+        }
+    </script>
+</body>
+</html>
