@@ -136,6 +136,8 @@ def send_absen_to_gas(status, data_template):
         }), 500
 
 if __name__ == '__main__':
-    print("🚀 Server starting on http://localhost:5000")
+    import os
+    port = int(os.environ.get('PORT', 5000))
+    print("🚀 Server starting on http://0.0.0.0:" + str(port))
     print(f"📍 Google Apps Script: {GAS_URL}")
-    app.run(debug=True, host='localhost', port=5000)
+    app.run(debug=False, host='0.0.0.0', port=port)
