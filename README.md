@@ -3,12 +3,7 @@
 Aplikasi web sederhana untuk absensi dengan 2 endpoint berbeda (SS - Kantor dan WH - Rumah).
 
 ## Fitur
-- ✅ 2 Button untuk absen (SS dan WH)
-- ✅ Python Flask Backend
-- ✅ Terintegrasi dengan Google Apps Script
-- ✅ Konfirmasi dialog sebelum kirim
-- ✅ Full response dari server ditampilkan
-- ✅ Random VISITORID auto-generated
+
 
 ## Setup
 
@@ -75,3 +70,4 @@ Kirim absen WH (Work From Home - Rumah)
 
 ## License
 MIT
+
