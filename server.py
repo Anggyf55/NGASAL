@@ -20,10 +20,10 @@ def generate_visitor_id():
 DEFAULT_DATA_SS = {
     "NIK": "00",
     "PASS": "00rtdcgggj",
-    "LATITUDE": -6.187057576827758,
-    "LONGITUDE": 106.82053837546468,
-    "ADDRESS": "PGMTA, Jl. K.H. Wahid Hasyim No.27, RT.10/RW.2, Kb. Kacang, Kecamatan Tanah Abang, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10240, Indonesia",
-    "BRANCHNAME": "WORK HUB  - K.H. Wahid Hasyim",
+    "LATITUDE": -6.216638733549987,
+    "LONGITUDE": 106.81797119610248,
+    "ADDRESS": "Jl. Jenderal Sudirman No.Kav 45, RT.3/RW.4, Karet Semanggi, Kecamatan Setiabudi, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12930, Indonesia",
+    "BRANCHNAME": "SAMPOERNA STRATEGIC - Lt. 22",
     "REMARKS": "",
     "VISITORID": generate_visitor_id(),
     "USERAGENT": "android"
@@ -55,7 +55,7 @@ def absen_ss():
 @app.route('/api/absen/wh', methods=['POST'])
 def absen_wh():
     """Absen WH (Work From Home) - Rumah"""
-    return send_absen_to_gas('WFH', DEFAULT_DATA_WH)
+    return send_absen_to_gas('WFO', DEFAULT_DATA_WH)
 
 def send_absen_to_gas(status, data_template):
     """Generic function to send attendance to Google Apps Script"""
@@ -141,3 +141,4 @@ if __name__ == '__main__':
     print("🚀 Server starting on http://0.0.0.0:" + str(port))
     print(f"📍 Google Apps Script: {GAS_URL}")
     app.run(debug=False, host='0.0.0.0', port=port)
+
